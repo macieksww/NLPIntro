@@ -1,0 +1,37 @@
+,Token,Subtokens,Frequency
+0,e,['e'],2
+1,</w>,['</w>'],3
+2,a,['a'],2
+3,n,['n'],2
+4,and</w>,"['and', '</w>']",3
+5,the</w>,"['t', 'he</w>']",3
+6,pl,"['p', 'l']",1
+7,s</w>,"['s', '</w>']",1
+8,of</w>,"['o', 'f</w>']",2
+9,for</w>,"['f', 'or</w>']",1
+10,our</w>,"['ou', 'r</w>']",1
+11,deep</w>,"['de', 'ep</w>']",1
+12,et</w>,"['et', '</w>']",1
+13,has</w>,"['has', '</w>']",1
+14,spac,"['spa', 'c']",1
+15,galaxies</w>,"['ga', 'laxies</w>']",1
+16,hum,"['hu', 'm']",1
+17,mysterious</w>,"['my', 'sterious</w>']",1
+18,imagination</w>,"['imag', 'ination</w>']",1
+19,beyond</w>,"['bey', 'ond</w>']",1
+20,bodies</w>,"['bodi', 'es</w>']",1
+21,wonders</w>,"['wond', 'ers</w>']",1
+22,vast</w>,"['vast', '</w>']",1
+23,stargazers</w>,"['sta', 'rgazers</w>']",1
+25,alike</w>,"['alike', '</w>']",1
+26,distant</w>,"['dista', 'nt</w>']",1
+27,expanse</w>,"['expan', 'se</w>']",1
+28,have</w>,"['have', '</w>']",1
+29,sparked</w>,"['spar', 'ked</w>']",1
+30,centuries</w>,"['cent', 'uries</w>']",1
+31,celestial</w>,"['celest', 'ial</w>']",1
+32,atmosphere</w>,"['atmos', 'phere</w>']",1
+33,curiosity</w>,"['curi', 'osity</w>']",1
+34,captivated</w>,"['capti', 'vated</w>']",1
+35,nebulae</w>,"['nebulae', '</w>']",1
+36,scientists</w>,"['scientists', '</w>']",1

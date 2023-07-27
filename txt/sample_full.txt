@@ -1,0 +1,49 @@
+Deep space, the vast and mysterious expanse beyond our planet's atmosphere, has captivated human imagination for centuries.
+The wonders of distant galaxies, nebulae, and celestial bodies have sparked the curiosity of scientists and stargazers alike.
+As technology advances, so does our ability to explore the mysteries hidden in the depths of space.
+One of the most remarkable achievements in space exploration was the launch of space telescopes like the Hubble Space Telescope.
+Placed in orbit around Earth, the Hubble has provided astronomers with breathtaking images of distant galaxies,
+revealing the incredible beauty and complexity of the universe.
+These images have not only expanded our understanding of space
+but also left us in awe of its vastness.
+Another significant milestone was the exploration of our neighboring planets using robotic probes.
+Mars, often referred to as Earth's "sister planet," has been a subject of intense study.
+Rovers like Curiosity and Perseverance have traversed its surface, sending back valuable data and images,
+fueling the dream of human colonization of the Red Planet.
+Beyond our solar system, the search for exoplanets has been an exciting endeavor.
+Scientists have discovered thousands of planets orbiting distant stars,
+some of which may have the potential to support life.
+This discovery opens up a new chapter in the search for extraterrestrial life and fuels our curiosity about
+the possibilities beyond our own home planet.
+However, space exploration comes with its challenges and risks. The vast distances involved in interstellar
+travel present formidable obstacles for future human missions to distant stars.
+Additionally, the harsh conditions of space, such as extreme temperatures and cosmic radiation,
+demand innovative solutions to ensure the safety and success of space missions.
+Despite the challenges, the pursuit of knowledge about deep space continues to inspire generations of scientists,
+engineers, and space enthusiasts. With each new discovery, we inch closer to unlocking the secrets of the cosmos,
+understanding our place in the universe, and perhaps finding answers to the most profound questions about life beyond Earth.
+In conclusion, the exploration of deep space remains one of humanity's most daring and ambitious endeavors.
+It serves as a testament to our insatiable curiosity and our desire to venture into the unknown.
+As technology continues to advance, the mysteries of deep space will undoubtedly continue to captivate
+our imagination and push the boundaries of human exploration.
+
+    # def create_substrings(self, string):
+    #     """
+    #     Function that returns consistent substrings of a given string
+    #     """
+    #     if '</w>' in string:
+    #         string = string[:-4]
+    #         substrings = []
+    #         for substr_len in range(1, len(string)+1):
+    #             for stpt in range(0, len(string)-substr_len+1):
+    #                 substrings.append(string[stpt:stpt + substr_len])
+    #         for substr_len in range(1, len(string)):
+    #             substrings.append(f'{string[(-1)*substr_len:]}{"</w>"}')
+    #         substrings.append('</w>')
+    #     else:
+    #         substrings = []
+    #         for substr_len in range(1, len(string)):
+    #             for stpt in range(0, len(string)-substr_len+1):
+    #                 substrings.append(string[stpt:stpt+substr_len])
+    #                 substrings += list(map(''.join, combinations(string, substr_len)))
+    #     return list(set(substrings))
