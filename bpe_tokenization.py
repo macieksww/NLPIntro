@@ -17,6 +17,7 @@ class BPETokenizer:
         normalized_txt = tokenizer.backend_tokenizer.normalizer.normalize_str(self.text)
         pretokenized_list = tokenizer.backend_tokenizer.pre_tokenizer.pre_tokenize_str(normalized_txt)
         self.pretokenized_words = []
+        self.pretokenized_words_without_end = []
         self.pretokenized_words_splitted_dict = {}
         for pretoken in pretokenized_list:
             if pretoken[0] not in non_word_characters:
@@ -30,6 +31,7 @@ class BPETokenizer:
                 else:
                     char_counter_dict["</w>"] = 1
                 self.pretokenized_words.append(f'{pretoken[0]}{"</w>"}')
+                self.pretokenized_words_without_end.append(f'{pretoken[0]}')
                 self.pretokenized_words_splitted_dict[f'{pretoken[0]}{"</w>"}'] = [*pretoken[0], "</w>"]
         self.words_counter_dict = Counter(self.pretokenized_words)
         """
@@ -41,6 +43,11 @@ class BPETokenizer:
         self.tokens_df = pd.DataFrame(list(zip(char_counter_dict.keys(),
                                        subtokens, char_counter_dict.values())),
                                        columns=["Token", "Subtokens", "Frequency"])
+        return self.tokens_df, \
+            self.pretokenized_words, \
+            self.pretokenized_words_splitted_dict, \
+            self.words_counter_dict, \
+            self.pretokenized_words_without_end
 
     def generate_new_tokens(self):
         """
@@ -158,21 +165,21 @@ class BPETokenizer:
             # self.dropped_tokens += self.tokens_df.loc[(self.tokens_df['Frequency'] <= 0)]['Token'].to_list()
             self.tokens_df.drop(self.tokens_df[self.tokens_df['Frequency'] <= 0].index, inplace=True)
 
-    def bpe_create_tokens(self):
+    def bpe_create_tokens(self, max_iterations):
         num_of_tokens_in_iteration = []
-        max_iterations = 200
         i = 0
         while i < max_iterations:
-            print(f'{"ITERATION: "}{i}')
+            # print(f'{"ITERATION: "}{i}')
             self.generate_new_tokens()
-            num_of_tokens_in_iteration.append(len(self.tokens_df))
+            # num_of_tokens_in_iteration.append(len(self.tokens_df))
             i += 1
-        return self.tokens_df, num_of_tokens_in_iteration
+        return self.tokens_df
+        # num_of_tokens_in_iteration
 
-tkn = BPETokenizer()
-tkn.create_and_split_corpus()
-sorted_tokens_df, num_of_tokens_in_iteration = tkn.bpe_create_tokens()
-sorted_tokens_df[["Token", "Subtokens", "Frequency"]].to_csv("txt/tokens_df.csv", index=True)
-xs = [x for x in range(len(num_of_tokens_in_iteration))]
-plt.plot(xs, num_of_tokens_in_iteration)
-plt.show()
+# tkn = BPETokenizer()
+# tkn.create_and_split_corpus()
+# sorted_tokens_df, num_of_tokens_in_iteration = tkn.bpe_create_tokens()
+# sorted_tokens_df[["Token", "Subtokens", "Frequency"]].to_csv("txt/tokens_df.csv", index=True)
+# xs = [x for x in range(len(num_of_tokens_in_iteration))]
+# plt.plot(xs, num_of_tokens_in_iteration)
+# plt.show()
