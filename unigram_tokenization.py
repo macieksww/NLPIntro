@@ -11,8 +11,8 @@ pd.options.mode.chained_assignment = None
 class UnigramTokenizer:
     def __init__(self, vocab_size=20,
                  path_to_txt="txt/sample.txt",
-                 max_iterations=50):
-        self.text = read_file(path_to_txt, "r")
+                 max_iterations=100):
+        self.path_to_txt = path_to_txt
         self.seed_generation_max_iterations = max_iterations
         self.tokens_df = pd.DataFrame()
         self.token_frequency = {}
@@ -33,7 +33,7 @@ class UnigramTokenizer:
         unigram algorithm. We use here the tokens generated
         in the first n iterations of bpe algorithm
         """
-        bpe_tkn = BPETokenizer()
+        bpe_tkn = BPETokenizer(path_to_txt=self.path_to_txt)
         self.tokens, self.pretokenized_words, \
             self.pretokenized_words_split_dict, self.words_counter_dict,\
             self.pretokenized_words_without_end = bpe_tkn.create_and_split_corpus()
@@ -42,9 +42,9 @@ class UnigramTokenizer:
         to make sure we can tokenize every new word
         """
         self.base_tokens = self.tokens["Token"].to_list()
-        self.token_seed = bpe_tkn.bpe_create_tokens(self.seed_generation_max_iterations).\
-            sort_values("Frequency", ascending=False)["Token"].to_list()
-        self.tokens = self.token_seed
+        self.token_seed, _ = bpe_tkn.train(self.seed_generation_max_iterations)
+        self.token_seed = self.token_seed.sort_values("Frequency", ascending=False)["Token"].to_list()
+        self.tokens = self.token_seed + self.base_tokens
 
     def tokenization_probability(self):
         """
@@ -67,19 +67,9 @@ class UnigramTokenizer:
         Counting token choice probability based on its frequency
         """
         for token in self.tokens:
-            self.token_probability[token] = np.log(self.token_frequency[token]/frequencies_sum)
+            self.token_probability[token] = -np.log(self.token_frequency[token]/frequencies_sum)
 
     def viterbi(self, word):
-        """
-        Counting the minimal cost to get to every char in the word.
-        Possible edges connect subwords that exist in the tokens list.
-        At first a graph is constructed. Nodes are consecutive chars of
-        a given word and edges are the tokens.
-        """
-        self.tokens = ["d", "u", "p", "a", "du", "up", "upa", "pa"]
-        self.token_frequency = {token:word.count(token) for token in self.tokens}
-        self.token_probability = {t: f/sum(self.token_frequency.values())
-                                  for t, f in self.token_frequency.items()}
         # Create graph nodes
         graph = Graph()
         nodes = []
@@ -183,8 +173,11 @@ class UnigramTokenizer:
             acceptable_paths_tokens.append(acceptable_paths_token)
         return acceptable_paths_tokens
 
+    def train(self):
+        for word in self.pretokenized_words:
+            self.viterbi(word)
+
 tkn = UnigramTokenizer()
-# tkn.generate_seed_from_bpe()
-# tkn.tokenization_probability()
-# print(tkn.token_probability)
-tkn.viterbi("dupadupa")
+tkn.generate_seed_from_bpe()
+tkn.tokenization_probability()
+tkn.train()

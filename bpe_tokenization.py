@@ -1,14 +1,15 @@
 import pandas as pd
 import copy
 import matplotlib.pyplot as plt
-from transformers import AutoTokenizer
 from helpful_functions import read_file
 from collections import Counter
+from transformers import AutoTokenizer
 pd.options.mode.chained_assignment = None
 
 class BPETokenizer:
     def __init__(self, path_to_txt="txt/sample.txt"):
         self.text = read_file(path_to_txt ,"r")
+        self.debug = False
 
     def create_and_split_corpus(self):
         non_word_characters = [".", ",", "'", "(", ")", '"', ";", "[", "]", "{", "}"]
@@ -165,16 +166,16 @@ class BPETokenizer:
             # self.dropped_tokens += self.tokens_df.loc[(self.tokens_df['Frequency'] <= 0)]['Token'].to_list()
             self.tokens_df.drop(self.tokens_df[self.tokens_df['Frequency'] <= 0].index, inplace=True)
 
-    def bpe_create_tokens(self, max_iterations):
+    def train(self, max_iterations=200):
         num_of_tokens_in_iteration = []
         i = 0
         while i < max_iterations:
-            # print(f'{"ITERATION: "}{i}')
             self.generate_new_tokens()
-            # num_of_tokens_in_iteration.append(len(self.tokens_df))
+            if self.debug:
+                print(f'{"ITERATION: "}{i}')
+                num_of_tokens_in_iteration.append(len(self.tokens_df))
             i += 1
-        return self.tokens_df
-        # num_of_tokens_in_iteration
+        return self.tokens_df, num_of_tokens_in_iteration
 
 # tkn = BPETokenizer()
 # tkn.create_and_split_corpus()
